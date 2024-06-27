@@ -11,7 +11,6 @@ urlpatterns = [
     
     path('signup/', CustomerSignupView.as_view(), name='signup'),
     path('login/', CustomerLoginView.as_view(), name='customerlogin'),
-    
     path('products/', ProductListView.as_view(), name='product_list'),
     path('cart/', CartView.as_view(), name='cart'),
     path('products/<int:pk>/add_to_cart/', AddToCartView.as_view(), name='add_to_cart'),
