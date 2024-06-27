@@ -68,11 +68,17 @@ class CustomerLoginView(View):
         
 
         
-
+#__________________Listing of products__________________
 class ProductListView(View):
     def get(self, request):
         products = Product.objects.all()
         return render(request, 'customer/product_list.html', {'products': products})
+    
+class CustomerListView(View):
+    def get(self, request):
+        customer = User.objects.filter(is_superuser=False)
+        return render(request, 'customer/customer_list.html', {'customer': customer})
+    
 
 class CartView(View):
     def get(self, request):

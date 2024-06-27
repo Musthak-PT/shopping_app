@@ -1,3 +1,28 @@
+{% comment %} {% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3">
+
+            <div class="card" style="width: 18rem;" margin-top="100px" margin-right="100px">
+  <img class="card-img-top" src="{{product.img.url}}" alt="Card image cap" height="250px" >
+  <div class="card-body">
+    <h5 class="card-title">{{product.name}}</h5>
+    <p class="card-text">{{product.description}}</p>
+    <p class="card-text">{{product.price}}</p>
+    <p class="card-text">{{product.stock}}</p>
+    <a href="{% url 'customer:customerlogin' .id %}" class="btn btn-primary">View details</a>
+  </div>
+</div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div> {% endcomment %}
+
+
+
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -142,9 +167,8 @@
                                     <h5 class="card-title">{{ product.name }}</h5>
                                     <p class="card-text">{{ product.description }}</p>
                                     <p class="card-text">Price: ${{ product.price }}</p>
-                                    {% if user.is_authenticated %}
-                                    <a href="{% url 'customer:add_to_cart' product.pk %}" class="btn btn-primary">Order</a>
-                                    {% endif %}
+                                    <p class="card-text">{{product.stock}}</p>
+                                    <a href="{% url 'customer:add_to_cart' product.pk %}" class="btn btn-primary">View details</a>
                         </div>
                             </div>
                         </div>

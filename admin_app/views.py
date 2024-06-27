@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout
-
+from shop.models import Product
 # Create your views here.
 
 #admin home page
@@ -35,3 +35,14 @@ class LogoutView(View):
     def get(self, request):
         auth_logout(request)
         return redirect('/')
+
+#______________________CRUD OPERATIONS ____________________
+class Productindex(View):
+    def get(self, request):
+        products = Product.objects.all()
+        return render(request, 'product_index.html', {'products': products})
+    
+class Productindex(View):
+    def get(self, request,product_id):
+        products = Product.objects.get(id=product_id)
+        return render(request, 'product_index.html', {'products': products})

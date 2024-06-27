@@ -17,7 +17,7 @@ class Product(models.Model):
     description       = models.TextField()
     price             = models.DecimalField(max_digits=10, decimal_places=2)
     stock             = models.PositiveIntegerField()
-    image             = models.FileField(('Product Image'), null=True, blank=True, upload_to=product_image, default=product_default_image)
+    image             = models.ImageField(upload_to='gallery')
     average_rating    = models.FloatField(default=0.0)
     
     def save(self, *args, **kwargs):
