@@ -75,7 +75,6 @@ class OrderResponseSchema(serializers.ModelSerializer):
             except KeyError:
                 pass
         return datas
-#__________________________________________________________________
     
     
 class UserSerializer(serializers.ModelSerializer):
