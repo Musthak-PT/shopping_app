@@ -86,24 +86,29 @@
                     {% if user.is_authenticated %}
                     <li class="d-lg-none"><a href="{% url 'customer:signup' %}" class="nav-link">Orders</a></li>
                     <li class="d-lg-none"><a href="{% url 'customer:signup' %}" class="nav-link">Cart</a></li>
-                    <li class="d-lg-none"><a href="{% url 'customer:signup' %}" class="nav-link">Logout</a></li>
+                    <li class="d-lg-none"><a href="{% url 'admin_app:logout' %}" class="nav-link">Logout</a></li>
                     {% else %}
                         <li class="d-lg-none"><a href="{% url 'customer:signup' %}"><span class="mr-2">+</span> Register</a></li>
                         <li class="d-lg-none"><a href="{% url 'customer:customerlogin' %}">Log In</a></li>
                     {% endif %}
+                    <li class="d-lg-none"><a href="{% url 'admin_app:login' %}">Admin</a></li>
+
                 </ul>
             </nav>
 
             <div class="right-cta-menu text-right d-flex align-items-center col-6">
                 <div class="ml-auto">
+
                     {% if user.is_authenticated %}
-                    <a href="{% url 'customer:signup' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">Orders</a>
+                    <a href="{% url 'customer:signup' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Orders</a>
                     <a href="{% url 'customer:customerlogin' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Cart</a>
-                    <a href="{% url 'customer:customerlogin' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-unlock"></span>Logout</a>
+                    <a href="{% url 'admin_app:logout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-unlock"></span>Logout</a>
                     {% else %}
                         <a href="{% url 'customer:signup' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Register</a>
                         <a href="{% url 'customer:customerlogin' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
                     {% endif %}
+                    <a href="{% url 'admin_app:login' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Admin</a>
+
                 </div>
                 <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
             </div>
