@@ -1,0 +1,115 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Shopping</title>
+
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .hero {
+        background-image: url({% static 'images/ecommerce_home.jpeg' %});
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+      }
+      .site-navbar {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+      }
+
+      .site-logo a {
+        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+      }
+      .site-navigation {
+        display: flex;
+        justify-content: center;
+      }
+      .right-cta-menu {
+        display: flex;
+        align-items: center;
+      }
+      .right-cta-menu .btn {
+        margin-left: 10px;
+      }
+      .site-menu-toggle {
+        display: none;
+      }
+      
+      @media (max-width: 1199px) {
+        .site-menu-toggle {
+          display: inline-block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+    <header class="site-navbar mt-3">
+      <div class="container-fluid">
+        <div class="row align-items-center" style="padding-top: 121px;">
+          <div class="site-logo col-6"><a href="{% url 'shop:index' %}"><B>Shopping</b></a></div>
+
+          <nav class="mx-auto site-navigation" >
+            <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0" >
+              {% comment %} <li><a href="{% url 'shop:index' %}" class="nav-link active">Home</a></li> {% endcomment %}
+              
+              <li class="d-lg-none"><a href=""><span class="mr-2">+</span> Register</a></li>
+              <li class="d-lg-none"><a href="{% url 'customer:login' %}">Log In</a></li>
+            </ul>
+          </nav>
+
+          <div class="right-cta-menu text-right d-flex align-items-center col-6">
+            <div class="ml-auto">
+              <a href="" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Register</a>
+              <a href="{% url 'customer:login' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
+            </div>
+            <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <div class="hero"></div>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

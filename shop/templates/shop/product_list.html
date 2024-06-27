@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Product List</h1>
+    {% for product in products %}
+        <div>
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p>Price: ${{ product.price }}</p>
+            <p>Average Rating: {{ product.average_rating }}</p>
+            <a href="{% url 'shop:product_detail' product.pk %}">View Details</a>
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}

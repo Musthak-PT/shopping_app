@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyShop</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'customer:product_list' %}">Products</a></li>
+            <li><a href="{% url 'customer:cart' %}">Cart</a></li>
+            <li><a href="{% url 'customer:order_list' %}">Orders</a></li>
+            <li><a href="{% url 'customer:logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
