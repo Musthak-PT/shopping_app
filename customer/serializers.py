@@ -42,8 +42,42 @@ class CustomerRegistrationSerializer(serializers.ModelSerializer):
             
         instance.save()
         return instance
+#_________________________product_listing__________________
 
+class ProductResponseSchema(serializers.ModelSerializer):
+    class Meta:
+        model= Product
+        fields = '__all__'
+        
+    def to_representation(self, instance):
+        datas = super().to_representation(instance)
+        for key in datas.keys():
+            try:
+                if datas[key] is None:
+                    datas[key] = ""
+            except KeyError:
+                pass
+        return datas
 
+#_________________________Orders_listing__________________
+
+class OrderResponseSchema(serializers.ModelSerializer):
+    class Meta:
+        model= Order
+        fields = '__all__'
+        
+    def to_representation(self, instance):
+        datas = super().to_representation(instance)
+        for key in datas.keys():
+            try:
+                if datas[key] is None:
+                    datas[key] = ""
+            except KeyError:
+                pass
+        return datas
+#__________________________________________________________________
+    
+    
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

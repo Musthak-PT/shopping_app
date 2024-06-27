@@ -12,13 +12,14 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
-from customer.serializers import CustomerRegistrationSerializer
+from customer.serializers import CustomerRegistrationSerializer , ProductResponseSchema , OrderResponseSchema
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics
 from ecommerce.response import ResponseInfo
+from rest_framework import generics, filters, permissions
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 #______________________Customer registration view__________________________________
 
@@ -146,3 +147,52 @@ class CreateOrUpdateCustomerRegistrationApiView(generics.GenericAPIView):
             self.response_format['status'] = False
             self.response_format['message'] = serializer.errors
             return Response(self.response_format, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+from rest_framework import filters
+
+#____________________________Listing of products____________________
+class GetProductListingApiView(generics.ListAPIView):
+    queryset = Product.objects.all().order_by('-id')
+    serializer_class = ProductResponseSchema
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['id']
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        instance_id = request.GET.get('id', None)
+        
+        if instance_id:
+            queryset = queryset.filter(id=instance_id)
+        
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    
+#___________________________________orders_Listing______________________
+
+class GetOrderListingApiView(generics.ListAPIView):
+    queryset = Order.objects.all().order_by('-id')
+    serializer_class = OrderResponseSchema
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['id']
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        instance_id = request.GET.get('id', None)
+        
+        if instance_id:
+            queryset = queryset.filter(id=instance_id)
+        
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+

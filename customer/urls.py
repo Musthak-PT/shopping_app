@@ -1,7 +1,8 @@
 from django.urls import path
+from rest_framework.authtoken.views import obtain_auth_token
 from . import views
 from .views import (
-    CustomerSignupView, CustomerLoginView, ProductListView, CartView, AddToCartView, OrderListView, RateProductView ,LogoutView, CreateOrUpdateCustomerRegistrationApiView
+    CustomerSignupView, CustomerLoginView, ProductListView, CartView, AddToCartView, OrderListView, RateProductView ,LogoutView
 )
 
 app_name = 'customer'
@@ -19,9 +20,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     
     #________________________________apis________________________________________________
-    path('customer-register/', views.CreateOrUpdateCustomerRegistrationApiView.as_view()),
+    path('customer-register/', views.CreateOrUpdateCustomerRegistrationApiView.as_view()), #Customer Registration
+    path('customer-login/', obtain_auth_token, name='login'), #Customer Login
+    path('listing-products/', views.GetProductListingApiView.as_view()), #Listing Products
+    path('listing-orders/', views.GetOrderListingApiView.as_view()), #Listing Products
+    
 
-    
-    
-    
+   
 ]
