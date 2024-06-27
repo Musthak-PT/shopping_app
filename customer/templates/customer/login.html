@@ -27,7 +27,7 @@
 
 
 
-                        <form method="POST" action="login" class="register-form" id="register-form">
+                        <form method="POST" action="{% url 'customer:customerlogin' %}" class="register-form" id="register-form">
                                 {% csrf_token %}
 
 

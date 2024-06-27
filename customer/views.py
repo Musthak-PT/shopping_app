@@ -8,6 +8,10 @@ from shop.models import Product, Order
 from django.db.models import Avg
 from django.shortcuts import redirect
 from django.contrib.auth import logout as django_logout
+from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login
+
+#______________________Customer registration view__________________________________
 
 class CustomerSignupView(View):
     def get(self, request):
@@ -20,33 +24,40 @@ class CustomerSignupView(View):
             user = form.save()
             Customer.objects.create(user=user)
             login(request, user)
-            return redirect('customer:product_list')
+            return redirect('customer:product_list')  # Replace with your desired redirect URL
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
         return render(request, 'customer/signup.html', {'form': form})
+    
 
-# class CustomerLoginView(View):
-#     def get(self, request):
-#         form = AuthenticationForm()
-#         return render(request, 'customer/login.html', {'form': form})
+#___________________________Customer login view_______________________________________
 
-#     def post(self, request):
-#         form = AuthenticationForm(request, data=request.POST)
-#         if form.is_valid():
-#             user = form.get_user()
-#             login(request, user)
-#             return redirect('customer:product_list')
-#         return render(request, 'customer/login.html', {'form': form})
 class CustomerLoginView(View):
     def get(self, request):
-        form = AuthenticationForm()
-        return render(request, 'customer/login.html', {'form': form})
-
+        return render(request, 'customer/login.html')
+    
     def post(self, request):
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('customer:product_list')
-        return render(request, 'customer/login.html', {'form': form})
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        # Authenticate user
+        user = authenticate(username=username, password=password)
+        
+        # Check if user is authenticated and is not a superuser
+        if user is not None and not user.is_superuser:
+            # Log the customer in
+            auth_login(request, user)
+            return redirect('shop:index')  
+        
+        # Invalid credentials or user is a superuser
+        else:
+            messages.error(request, 'Invalid username or password for customer')
+            return redirect('customer:customerlogin')
+        
+
+        
 
 class ProductListView(View):
     def get(self, request):
