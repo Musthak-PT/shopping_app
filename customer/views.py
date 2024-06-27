@@ -10,6 +10,15 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout as django_logout
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
+from django.shortcuts import render
+from rest_framework.generics import GenericAPIView
+from customer.serializers import CustomerRegistrationSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+from ecommerce.response import ResponseInfo
 
 #______________________Customer registration view__________________________________
 
@@ -104,3 +113,36 @@ class LogoutView(View):
     def get(self, request, *args, **kwargs):
         django_logout(request)
         return redirect('customer:login')  # Redirect to login page after logout
+    
+#_________________________________Customer registration apis_____________________________
+
+
+class CreateOrUpdateCustomerRegistrationApiView(generics.GenericAPIView):
+    
+    def __init__(self, **kwargs):
+        self.response_format = ResponseInfo().response
+        super(CreateOrUpdateCustomerRegistrationApiView, self).__init__(**kwargs)
+    
+    serializer_class = CustomerRegistrationSerializer
+    
+    def post(self, request):
+        try:
+            serializer = self.serializer_class(data=request.data, context={'request': request})
+            if not serializer.is_valid():
+                self.response_format['status_code'] = status.HTTP_400_BAD_REQUEST
+                self.response_format["status"] = False
+                self.response_format["errors"] = serializer.errors
+                return Response(self.response_format, status=status.HTTP_400_BAD_REQUEST)
+            
+            instance = serializer.save()
+
+            self.response_format['status_code'] = status.HTTP_201_CREATED
+            self.response_format["message"] = "Customer successfully registered"
+            self.response_format["status"] = True
+            return Response(self.response_format, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            self.response_format['status_code'] = status.HTTP_500_INTERNAL_SERVER_ERROR
+            self.response_format['status'] = False
+            self.response_format['message'] = serializer.errors
+            return Response(self.response_format, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

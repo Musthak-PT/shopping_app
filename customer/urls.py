@@ -1,6 +1,7 @@
 from django.urls import path
+from . import views
 from .views import (
-    CustomerSignupView, CustomerLoginView, ProductListView, CartView, AddToCartView, OrderListView, RateProductView ,LogoutView
+    CustomerSignupView, CustomerLoginView, ProductListView, CartView, AddToCartView, OrderListView, RateProductView ,LogoutView, CreateOrUpdateCustomerRegistrationApiView
 )
 
 app_name = 'customer'
@@ -16,5 +17,11 @@ urlpatterns = [
     path('orders/', OrderListView.as_view(), name='order_list'),
     path('products/<int:pk>/rate/', RateProductView.as_view(), name='rate_product'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    
+    #________________________________apis________________________________________________
+    path('customer-register/', views.CreateOrUpdateCustomerRegistrationApiView.as_view()),
+
+    
+    
     
 ]
