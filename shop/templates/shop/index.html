@@ -107,6 +107,7 @@
                         <a href="{% url 'customer:signup' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Register</a>
                         <a href="{% url 'customer:customerlogin' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
                     {% endif %}
+                    <a href="{% url 'customer:product_list' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Products</a>
                     <a href="{% url 'admin_app:login' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Admin</a>
 
                 </div>
@@ -118,33 +119,7 @@
 </header>
 
 <div class="hero">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        {% block content %}
-                            <h1>Products</h1>
-                            <div class="row">
-                                {% for product in products %}
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{ product.name }}</h5>
-                                                <p class="card-text">{{ product.description }}</p>
-                                                <p class="card-text">Price: ${{ product.price }}</p>
-                                                <a href="{% url 'customer:add_to_cart' product.pk %}" class="btn btn-primary">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endblock %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

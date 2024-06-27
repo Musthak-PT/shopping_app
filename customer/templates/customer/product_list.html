@@ -1,13 +1,101 @@
-{% extends 'base.html' %}
-{% block content %}
-    <h1>Products</h1>
-    {% for product in products %}
-        <div>
-            <h2>{{ product.name }}</h2>
-            <p>{{ product.description }}</p>
-            <p>Price: ${{ product.price }}</p>
-            <a href="{% url 'customer:add_to_cart' product.pk %}">Add to Cart</a>
-            <hr>
-        </div>
-    {% endfor %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Shopping</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .hero {
+            background-image: url({% static 'images/ecommerce_home.jpeg' %});
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+        .site-navbar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+        .site-logo a {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .site-navigation {
+            display: flex;
+            justify-content: center;
+        }
+        .right-cta-menu {
+            display: flex;
+            align-items: center;
+        }
+        .right-cta-menu .btn {
+            margin-left: 10px;
+        }
+        .site-menu-toggle {
+            display: none;
+        }
+        
+        @media (max-width: 1199px) {
+            .site-menu-toggle {
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <h1 class="text-center mb-4">Products</h1>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% else %}
+                    <!-- Placeholder image or default image -->
+                    <img src="{% static 'images/default_product_image.jpg' %}" class="card-img-top" alt="Default Image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text">Price: ${{ product.price }}</p>
+                        <a href="{% url 'customer:add_to_cart' product.pk %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
+<div class="hero">
+    
+</div>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.sticky.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
