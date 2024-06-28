@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
 
@@ -118,38 +117,21 @@
     <header class="site-navbar mt-3">
         <div class="right-cta-menu text-right d-flex align-items-center col-6">
             <div class="ml-auto">
-                <a href="{% url 'admin_app:productadd' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">ADD PRODUCT</a>
                 <a href="{% url 'admin_app:index' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Home</a>
             </div>
         </div>
     </header>
 
-    <div class="container">
-        <div class="row justify-content-center" style="padding-top:100px">
+    <div class="container" style="padding-top: 100px;">
+        <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="row">
-                    {% for product in products %}
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card">
-                                {% if product.image %}
-                                    {% comment %} <img src="{{ product.image.url }}" class="card-img-top"> {% endcomment %}
-                                    <img class="card-img-top" src="{{product.image.url}}" height="250px" >
-
-                                {% else %}
-                                    <!-- Placeholder image or default image -->
-                                    <img src="{% static 'images/default_product_image.jpg' %}" class="card-img-top" alt="Default Image">
-                                {% endif %}
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ product.name }}</h5>
-                                    <p class="card-text">{{ product.description }}</p>
-                                    <p class="card-text">Price: ${{ product.price }}</p>
-                                    <p class="card-text">{{product.stock}}</p>
-                                    <a href="{% url 'admin_app:productsdetailed' product.pk %}" class="btn btn-primary">View details</a>
-                        </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="text-right">
+                        <input type="submit" value="UPDATE" class="btn btn-warning">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

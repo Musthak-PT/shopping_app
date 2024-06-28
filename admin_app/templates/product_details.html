@@ -118,41 +118,30 @@
     <header class="site-navbar mt-3">
         <div class="right-cta-menu text-right d-flex align-items-center col-6">
             <div class="ml-auto">
-                <a href="{% url 'admin_app:productadd' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">ADD PRODUCT</a>
                 <a href="{% url 'admin_app:index' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Home</a>
             </div>
         </div>
     </header>
 
     <div class="container">
-        <div class="row justify-content-center" style="padding-top:100px">
-            <div class="col-md-8">
-                <div class="row">
-                    {% for product in products %}
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card">
-                                {% if product.image %}
-                                    {% comment %} <img src="{{ product.image.url }}" class="card-img-top"> {% endcomment %}
-                                    <img class="card-img-top" src="{{product.image.url}}" height="250px" >
 
-                                {% else %}
-                                    <!-- Placeholder image or default image -->
-                                    <img src="{% static 'images/default_product_image.jpg' %}" class="card-img-top" alt="Default Image">
-                                {% endif %}
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ product.name }}</h5>
-                                    <p class="card-text">{{ product.description }}</p>
-                                    <p class="card-text">Price: ${{ product.price }}</p>
-                                    <p class="card-text">{{product.stock}}</p>
-                                    <a href="{% url 'admin_app:productsdetailed' product.pk %}" class="btn btn-primary">View details</a>
-                        </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+        <div class="row">
+                <div class="col-md-6">
+                    <img src="{{product.image.url}}" width="300" height="300"></img>
                 </div>
+    
+            <div class="col-md-6">
+                <h2>Name: {{product.name}}</h2>
+                <h5>Description :{{product.description}}<br>
+                    Price: ${{product.price}} <br>
+                    Quantity: {{product.stock}}
+                </h5>
+                <br>
+    
+                <a class="btn btn-warning" href="{% url 'admin_app:productupdate' product.pk %}">UPDATE</a>
+                <a class="btn btn-danger" href="{% url 'admin_app:productdelete' product.pk %}">DELETE</a>
             </div>
         </div>
-    </div>
 
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
