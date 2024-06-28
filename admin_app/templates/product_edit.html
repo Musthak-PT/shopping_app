@@ -22,7 +22,7 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
+            {% comment %} overflow: hidden; {% endcomment %}
         }
         .hero {
             position: fixed;
@@ -117,7 +117,7 @@
     <header class="site-navbar mt-3">
         <div class="right-cta-menu text-right d-flex align-items-center col-6">
             <div class="ml-auto">
-                <a href="{% url 'admin_app:index' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Home</a>
+                <a href="{% url 'admin_app:productindex' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Home</a>
             </div>
         </div>
     </header>
