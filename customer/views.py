@@ -19,7 +19,6 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from ecommerce.response import ResponseInfo
 from rest_framework import generics, filters, permissions
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 #______________________Customer registration view__________________________________
 
@@ -183,6 +182,7 @@ class GetProductListingApiView(generics.ListAPIView):
 class GetOrderListingApiView(generics.ListAPIView):
     queryset = Order.objects.all().order_by('-id')
     serializer_class = OrderResponseSchema
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
     search_fields = ['id']
 
