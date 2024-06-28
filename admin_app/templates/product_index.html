@@ -143,7 +143,9 @@
                                     <h5 class="card-title">{{ product.name }}</h5>
                                     <p class="card-text">{{ product.description }}</p>
                                     <p class="card-text">Price: ${{ product.price }}</p>
-                                    <p class="card-text">{{product.stock}}</p>
+                                    <p class="card-text">Quantity :{{product.stock}}</p>
+                                    <p class="card-text">Average Rating: {{ product.average_rating|floatformat:1 }}</p>
+
                                     <a href="{% url 'admin_app:productsdetailed' product.pk %}" class="btn btn-primary">View details</a>
                         </div>
                             </div>

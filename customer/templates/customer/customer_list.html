@@ -127,18 +127,43 @@
         <div class="row justify-content-center" style="padding-top:100px">
             <div class="col-md-8">
                 <div class="row">
-                    {% for customer in customer %}
+                    {% comment %} {% for customer in customer %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card">
                                 
                                 <div class="card-body">
                                     <h5 class="card-title">Username:<br></h5>{{ customer.username }}
-                                    {% comment %} <p class="card-text">Price: ${{ product.price }}</p> {% endcomment %}
+                                    
                                     
                         </div>
                             </div>
                         </div>
-                    {% endfor %}
+                    {% endfor %} {% endcomment %}
+
+
+                    <div class="container">
+                        <div class="row justify-content-center" style="padding-top:100px">
+                            <div class="col-md-8">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><h5><b>SI NO</b></h5></th>
+                                            <th scope="col"><h5><b>USER NAME</b></h5></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for customer in customer %}
+                                            <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <th>{{ customer.username }}</th>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

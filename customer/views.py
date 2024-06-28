@@ -68,57 +68,20 @@ class CustomerLoginView(View):
 
         
 #__________________Listing of products__________________
+
+from shop.forms import RatingForm
 class ProductListView(View):
     def get(self, request):
         products = Product.objects.all()
-        return render(request, 'customer/product_list.html', {'products': products})
+        form = RatingForm()
+        return render(request, 'customer/product_list.html', {'products': products, 'form': form})
     
 class CustomerListView(View):
     def get(self, request):
         customer = User.objects.filter(is_superuser=False)
         return render(request, 'customer/customer_list.html', {'customer': customer})
-    
+     
 
-class CartView(View):
-    def get(self, request):
-        cart_items = Cart.objects.filter(customer=request.user.customer)
-        return render(request, 'customer/cart.html', {'cart_items': cart_items})
-
-class AddToCartView(View):
-    def post(self, request, pk):
-        product = get_object_or_404(Product, pk=pk)
-        quantity = int(request.POST.get('quantity', 1))
-        cart_item, created = Cart.objects.get_or_create(customer=request.user.customer, product=product)
-        if not created:
-            cart_item.quantity += quantity
-        cart_item.save()
-        return redirect('customer:cart')
-
-class OrderListView(View):
-    def get(self, request):
-        orders = Order.objects.filter(customer=request.user.customer)
-        return render(request, 'customer/order_list.html', {'orders': orders})
-
-class RateProductView(View):
-    def post(self, request, pk):
-        product = get_object_or_404(Product, pk=pk)
-        rating_value = int(request.POST.get('rating'))
-        rating, created = Rating.objects.get_or_create(customer=request.user.customer, product=product)
-        rating.rating = rating_value
-        rating.save()
-
-        # Update average rating
-        ratings = Rating.objects.filter(product=product)
-        average_rating = ratings.aggregate(Avg('rating'))['rating__avg']  # Use Avg from django.db.models
-        product.average_rating = average_rating
-        product.save()
-        
-        return redirect('customer:product_detail', pk=pk)
-    
-class LogoutView(View):
-    def get(self, request, *args, **kwargs):
-        django_logout(request)
-        return redirect('customer:login')  # Redirect to login page after logout
     
 #_________________________________Customer registration apis_____________________________
 

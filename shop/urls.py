@@ -1,11 +1,10 @@
 from django.urls import path
-from .views import ProductListView, ProductDetailView, OrderListView, OrderStatusUpdateView, IndexView, CartDetailedView, AddToCartView,CartRemoveView, FullRemoveView
+from .views import ProductListView, ProductDetailView, OrderListView, OrderStatusUpdateView, IndexView, CartDetailedView, AddToCartView,CartRemoveView, FullRemoveView, RateProductView
 
 app_name = 'shop'
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    
     path('products/', ProductListView.as_view(), name='product_list'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
     path('orders/', OrderListView.as_view(), name='order_list'),
@@ -16,5 +15,8 @@ urlpatterns = [
     path('add/<int:product_id>/', AddToCartView.as_view(), name='add_to_cart'),
     path('remove/<int:product_id>/', CartRemoveView.as_view(), name='cart_remove'),
     path('full_remove/<int:product_id>/',FullRemoveView.as_view(), name='full_remove'),
+    
+    #Rating
+    path('rate_product/<int:product_id>/', RateProductView.as_view(), name='rate_product'),
 
 ]

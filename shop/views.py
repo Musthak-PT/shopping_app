@@ -105,3 +105,34 @@ def _cart_id(request):
     if not cart:
         cart = request.session.create()
     return cart
+
+#___________________________Products_Rating _____________________________
+from django.contrib.auth.decorators import login_required
+from shop.forms import RatingForm
+from customer.models import Rating
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import FormView
+
+class RateProductView(LoginRequiredMixin, FormView):
+    form_class = RatingForm
+    template_name = 'customer/product_list.html'
+    
+    def form_valid(self, form):
+        product_id = self.kwargs['product_id']
+        product = get_object_or_404(Product, id=product_id)
+        rating_value = form.cleaned_data['rating']
+        
+        try:
+            customer = self.request.user.customer
+        except ObjectDoesNotExist:
+            # Handle the case where the customer object does not exist
+            # You can redirect to an error page or handle it appropriately
+            return redirect('customer:product_list')  # or handle the error appropriately
+        
+        Rating.objects.update_or_create(
+            customer=customer,
+            product=product,
+            defaults={'rating': rating_value}
+        )
+        return redirect('customer:product_list')

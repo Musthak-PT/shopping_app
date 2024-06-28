@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from random import randint
-
+from django.db.models import Avg
 
 def product_image(self, filename):
     return f"shop/image/{filename}"
@@ -19,6 +19,11 @@ class Product(models.Model):
     stock             = models.PositiveIntegerField()
     image             = models.ImageField(upload_to='gallery')
     average_rating    = models.FloatField(default=0.0)
+    
+    def update_average_rating(self):
+        avg_rating = self.rating_set.aggregate(Avg('rating'))['rating__avg'] or 0.0
+        self.average_rating = avg_rating
+        self.save()
     
     def save(self, *args, **kwargs):
         if not self.slug or self.name:

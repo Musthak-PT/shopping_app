@@ -40,9 +40,15 @@ class LogoutView(View):
 
 #______________________CRUD OPERATIONS ____________________
 #Listing of all products
+# class Productindex(View):
+#     def get(self, request):
+#         products = Product.objects.all()
+#         return render(request, 'product_index.html', {'products': products})
 class Productindex(View):
     def get(self, request):
         products = Product.objects.all()
+        for product in products:
+            product.update_average_rating()
         return render(request, 'product_index.html', {'products': products})
 
 #Detailed view 
