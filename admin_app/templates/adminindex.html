@@ -95,7 +95,7 @@
 
           <div class="right-cta-menu text-right d-flex align-items-center col-6">
             <div class="ml-auto">
-              {% comment %} <a href="" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Register</a> {% endcomment %}
+              <a href="{% url 'customer:rating_list' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Rating</a>
               <a href="{% url 'admin_app:productindex' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Manage Products</a>
               <a href="{% url 'customer:customers_list' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Customers</a>
               <a href="{% url 'admin_app:login' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log Out</a>

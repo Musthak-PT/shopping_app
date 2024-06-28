@@ -1,0 +1,186 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Shopping</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            {% comment %} overflow: hidden; {% endcomment %}
+        }
+        .hero {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url({% static 'images/ecommerce_home.jpeg' %});
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5; /* Adjust the opacity as desired */
+        }
+        .site-navbar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+        .site-logo a {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .site-navigation {
+            display: flex;
+            justify-content: center;
+        }
+        .right-cta-menu {
+            display: flex;
+            align-items: center;
+        }
+        .right-cta-menu .btn {
+            margin-left: 10px;
+        }
+        .site-menu-toggle {
+            display: none;
+        }
+        
+        @media (max-width: 1199px) {
+            .site-menu-toggle {
+                display: inline-block;
+            }
+        }
+
+        /* Adjust card styling */
+        .card {
+            border: none;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            height: 100%; /* Ensures each card occupies full height */
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: auto;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; /* Ensures each card occupies full height */
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-text {
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="hero"></div> <!-- Background image -->
+
+    <header class="site-navbar mt-3">
+        <div class="right-cta-menu text-right d-flex align-items-center col-6">
+            <div class="ml-auto">
+                <a href="{% url 'admin_app:index' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Home</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center" style="padding-top:100px">
+            <div class="col-md-8">
+                <div class="row">
+                    {% comment %} {% for customer in customer %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card">
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">Username:<br></h5>{{ customer.username }}
+                                    
+                                    
+                        </div>
+                            </div>
+                        </div>
+                    {% endfor %} {% endcomment %}
+
+
+                    <div class="container">
+                        <div class="row justify-content-center" style="padding-top:100px">
+                            <div class="col-md-8">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><h5><b>SI NO</b></h5></th>
+                                            <th scope="col"><h5><b>USER NAME</b></h5></th>
+                                            <th scope="col"><h5><b>PRODUCT NAME</b></h5></th>
+                                            <th scope="col"><h5><b>RATING</b></h5></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for rating in rating %}
+                                            <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <th>{{ rating.customer.user.username }}</th>
+                                                <th>{{ rating.product.name }}</th>
+                                                <th>{{ rating.rating }}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="height:20;width:20;">
+                                                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="yellow"/>
+                                                    </svg>
+                                                </th>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

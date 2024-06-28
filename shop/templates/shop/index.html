@@ -85,7 +85,6 @@
             <nav class="mx-auto site-navigation">
                 <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
                     {% if user.is_authenticated %}
-                    <li class="d-lg-none"><a href="{% url 'customer:signup' %}" class="nav-link">Orders</a></li>
                     <li class="d-lg-none"><a href="{% url 'shop:cart_detail' %}" class="nav-link">Cart</a></li>
                     <li class="d-lg-none"><a href="{% url 'admin_app:logout' %}" class="nav-link">Logout</a></li>
                     {% else %}
@@ -101,7 +100,6 @@
                 <div class="ml-auto">
 
                     {% if user.is_authenticated %}
-                    <a href="{% url 'customer:signup' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Orders</a>
                     <a href="{% url 'shop:cart_detail' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Cart</a>
                     <a href="{% url 'admin_app:logout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-unlock"></span>Logout</a>
                     {% else %}

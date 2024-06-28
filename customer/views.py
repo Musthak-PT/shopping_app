@@ -80,6 +80,11 @@ class CustomerListView(View):
     def get(self, request):
         customer = User.objects.filter(is_superuser=False)
         return render(request, 'customer/customer_list.html', {'customer': customer})
+    
+class RatingListView(View):
+    def get(self, request):
+        rating = Rating.objects.all()
+        return render(request, 'customer/rating_listing.html', {'rating': rating})
      
 
     
