@@ -9,13 +9,13 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.username
 
-class Cart(models.Model):
-    customer    = models.ForeignKey(User, on_delete=models.CASCADE)
-    product     = models.ForeignKey('shop.Product', on_delete=models.CASCADE)
-    quantity    = models.PositiveIntegerField()
+# class Cart(models.Model):
+#     customer    = models.ForeignKey(User, on_delete=models.CASCADE)
+#     product     = models.ForeignKey('shop.Product', on_delete=models.CASCADE)
+#     quantity    = models.PositiveIntegerField()
 
-    def __str__(self):
-        return f"Cart {self.id} for {self.customer.user.username}"
+#     def __str__(self):
+#         return f"Cart {self.id} for {self.customer.user.username}"
 
 class Rating(models.Model):
     customer    = models.ForeignKey(Customer, on_delete=models.CASCADE)

@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Customer, Cart, Rating
+from .models import Customer, Rating
 from shop.models import Product, Order
 from django.db.models import Avg
 from django.shortcuts import redirect

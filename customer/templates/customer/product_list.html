@@ -144,6 +144,7 @@
                                     <p class="card-text">Price: ${{ product.price }}</p>
                                     {% if user.is_authenticated %}
                                     <a href="{% url 'shop:add_to_cart' product.id %}" class="btn btn-primary">Add to cart</a>
+                                    
                                     {% endif %}
                         </div>
                             </div>

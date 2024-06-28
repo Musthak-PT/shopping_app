@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Product, Order
 from django.views.generic import TemplateView
-
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Cart, CartItem
 
 class IndexView(TemplateView):
     template_name = 'shop/index.html'
@@ -30,8 +31,6 @@ class OrderStatusUpdateView(View):
         return redirect('shop:order_list')
     
 #_________________________Add to cart_________________________________________
-from django.core.exceptions import ObjectDoesNotExist
-from .models import Cart, CartItem
 
 class CartDetailedView(TemplateView):
     template_name = 'cart/cart.html'
@@ -43,7 +42,7 @@ class CartDetailedView(TemplateView):
         cart_items = None
 
         try:
-            cart = Cart.objects.get(cart_id=_cart_id(self.request))
+            cart = Cart.objects.get(user=self.request.user)
             cart_items = CartItem.objects.filter(cart=cart, active=True)
             for cart_item in cart_items:
                 total += (cart_item.product.price * cart_item.quantity)
@@ -56,16 +55,14 @@ class CartDetailedView(TemplateView):
         context['counter'] = counter
         return context
 
-
-#Add to cart
 class AddToCartView(View):
     def get(self, request, product_id):
         product = get_object_or_404(Product, id=product_id)
         
         try:
-            cart = Cart.objects.get(cart_id=_cart_id(request))
+            cart = Cart.objects.get(user=request.user)
         except Cart.DoesNotExist:
-            cart = Cart.objects.create(cart_id=_cart_id(request))
+            cart = Cart.objects.create(user=request.user)
         
         try:
             cart_item = CartItem.objects.get(product=product, cart=cart)
@@ -81,12 +78,9 @@ class AddToCartView(View):
 
         return redirect('shop:cart_detail')
 
-
-
-#single remove of item from cart
 class CartRemoveView(View):
     def get(self, request, product_id):
-        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart = Cart.objects.get(user=request.user)
         product = get_object_or_404(Product, id=product_id)
         cart_item = CartItem.objects.get(product=product, cart=cart)
         
@@ -98,10 +92,9 @@ class CartRemoveView(View):
 
         return redirect('shop:cart_detail')
 
-
 class FullRemoveView(View):
     def get(self, request, product_id):
-        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart = Cart.objects.get(user=request.user)
         product = get_object_or_404(Product, id=product_id)
         cart_item = CartItem.objects.get(product=product, cart=cart)
         cart_item.delete()

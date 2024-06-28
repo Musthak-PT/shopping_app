@@ -86,7 +86,7 @@
                 <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
                     {% if user.is_authenticated %}
                     <li class="d-lg-none"><a href="{% url 'customer:signup' %}" class="nav-link">Orders</a></li>
-                    <li class="d-lg-none"><a href="{% url 'customer:signup' %}" class="nav-link">Cart</a></li>
+                    <li class="d-lg-none"><a href="{% url 'shop:cart_detail' %}" class="nav-link">Cart</a></li>
                     <li class="d-lg-none"><a href="{% url 'admin_app:logout' %}" class="nav-link">Logout</a></li>
                     {% else %}
                         <li class="d-lg-none"><a href="{% url 'customer:signup' %}"><span class="mr-2">+</span> Register</a></li>
@@ -102,7 +102,7 @@
 
                     {% if user.is_authenticated %}
                     <a href="{% url 'customer:signup' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Orders</a>
-                    <a href="{% url 'customer:customerlogin' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Cart</a>
+                    <a href="{% url 'shop:cart_detail' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Cart</a>
                     <a href="{% url 'admin_app:logout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-unlock"></span>Logout</a>
                     {% else %}
                         <a href="{% url 'customer:signup' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Register</a>
