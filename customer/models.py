@@ -10,7 +10,7 @@ class Customer(models.Model):
         return self.user.username
 
 class Cart(models.Model):
-    customer    = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer    = models.ForeignKey(User, on_delete=models.CASCADE)
     product     = models.ForeignKey('shop.Product', on_delete=models.CASCADE)
     quantity    = models.PositiveIntegerField()
 

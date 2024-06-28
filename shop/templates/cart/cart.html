@@ -1,0 +1,235 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Shopping</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            {% comment %} overflow: hidden; {% endcomment %}
+        }
+        .hero {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url({% static 'images/ecommerce_home.jpeg' %});
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5; /* Adjust the opacity as desired */
+        }
+        .site-navbar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+        .site-logo a {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .site-navigation {
+            display: flex;
+            justify-content: center;
+        }
+        .right-cta-menu {
+            display: flex;
+            align-items: center;
+        }
+        .right-cta-menu .btn {
+            margin-left: 10px;
+        }
+        .site-menu-toggle {
+            display: none;
+        }
+        
+        @media (max-width: 1199px) {
+            .site-menu-toggle {
+                display: inline-block;
+            }
+        }
+
+        /* Adjust card styling */
+        .card {
+            border: none;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            height: 100%; /* Ensures each card occupies full height */
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: auto;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; /* Ensures each card occupies full height */
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-text {
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="hero"></div> <!-- Background image -->
+
+    <header class="site-navbar mt-3">
+        <div class="right-cta-menu text-right d-flex align-items-center col-6">
+            <div class="ml-auto">
+                <a href="{% url 'admin_app:productindex' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Home</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        {% if not cart_items %}
+
+        <div>
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">
+                    Your Cart Is Empty
+                </h1>
+                <br>
+                <p class="text-center">
+                    Click <a href="{% url 'shop:allProdCart' %}">here  </a> to continue Shopping.
+                </p>
+            </div>
+        </div>
+        {% else %}
+        <div>
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">
+                    Your Shopping Cart
+                </h1>
+                <br>
+            </div>
+        <div class="row mx-auto">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                <table class="table my_custom_table">
+                    <thead class="my_custom_thead">
+                    <tr>
+                        <th colspan="5">
+                            Your Items
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cart_item in cart_items %}
+                    <tr>
+                        <td>
+                            <a href="cart_item.product.get_absolute_url"><img src="{{ cart_item.product.image.url }}" alt="" class="float-left rounded custom_image" style="width:100px;height:100px;"></a>
+                        </td>
+                        <td class="text-lef">
+                            {{ cart_item.product.name }}
+                            <br>
+                            SKU: {{ cart_item.product.id }}
+                            <br>
+                            Price : {{ cart_item.product.price }}
+                            <br>
+                            Qty : {{ cart_item.quantity }} x {{ cart_item }}
+                        </td>
+                        <td>
+                            {{ cart_item.sub_total }}
+                        </td>
+                        {% if cart_item.quantity < cart_item.product.stock %}
+                        <td>
+                             <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_a"><i class="fas fa-plus"></i></a>
+                            &nbsp;<a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="custom_a"><i class="fas fa-minus"></i></a>
+                            &nbsp;<a href="{% url 'cart:full_remove' cart_item.product.id %}" class="custom_a"><i class="fas fa-trash"></i></a>
+                        </td>
+                        {% else %}
+                        <td>
+                            &nbsp;<a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="custom_a"><i class="fas fa-minus"></i></a>
+                            &nbsp;<a href="{% url 'cart:full_remove' cart_item.product.id %}" class="custom_a"><i class="fas fa-trash"></i></a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                <table class="table my_custom_table">
+                    <thead class="my_custom_thead">
+                    <tr>
+                        <th>
+                            Checkout
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            Please Review Our Shopping Cart Items.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">
+                            Total : <strong> {{ total }}</strong>
+        
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="mx-auto">
+                    <a href="{% url 'shop:allProdCat' %}" class="btn btn-secondary btn-block my_custom_button">Continue Shopping</a>
+        </div>
+            </div>
+        </div>
+        </div> 
+
+
+
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
